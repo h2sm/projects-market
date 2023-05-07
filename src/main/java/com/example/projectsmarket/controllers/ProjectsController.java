@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectsController {
     private final ProjectsService projectsService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(name = "/project",method = RequestMethod.POST)
     public void addProject(@RequestBody NewProjectDTO newProjectDTO){
         projectsService.addProject(newProjectDTO);
     }
 
-    @RequestMapping(value = "/{projectId}", method = RequestMethod.DELETE)
-    public void deleteProject(@PathVariable long projectId){
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public void deleteProject(@RequestParam long projectId){
         projectsService.deleteProject(projectId);
 
     }
 
-    @RequestMapping(value = "/{projectId}/{mark}", method = RequestMethod.POST)
-    public void setRatingToProject(@PathVariable long projectId, @PathVariable int mark){
+    @RequestMapping(value = "/mark", method = RequestMethod.POST)
+    public void setRatingToProject(@RequestParam long projectId, @RequestParam int mark){
         projectsService.setRatingToProject(projectId, mark);
     }
 
