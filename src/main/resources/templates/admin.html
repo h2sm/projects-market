@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Admin panel</title>
 </head>
 <body>
+<h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
+<h2>You are a <span th:text="${position}" /></h2>
+<h2>plz delete desired projects</h2>
+<table th:object="${allProjects}" id="table" border="1">
+    <tr>
+        <td>Project id</td>
+        <td>Project name</td>
+        <td>Project descrription</td>
+        <td>Student name</td>
+        <td>Marks</td>
 
+    </tr>
+    <tr th:each="project : ${allProjects}">
+        <td th:text="${project.getProjectId()}"></td>
+        <td  th:text="${project.getProjectName()}"></td>
+        <td  th:text="${project.getProjectDescription()}"></td>
+        <td  th:text="${project.getStudentName()}"></td>
+        <td>
+            <div th:if="${project.getMarks() != null}">
+                <div  th:each="mark : ${project.getMarks()}">
+                    <div  th:text="${mark}"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<form action="#" th:action="@{/delete}" th:object="${deleteDTO}" method="post">
+    <p>Project id: <input type="number" th:field="*{projectId}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

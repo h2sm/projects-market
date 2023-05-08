@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProjectMarksRepository extends JpaRepository<ProjectMarksEntity, Long> {
+    void deleteAllByStudentProject_ProjectIdEquals(long id);
 }

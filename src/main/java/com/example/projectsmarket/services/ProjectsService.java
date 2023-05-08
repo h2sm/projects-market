@@ -11,6 +11,7 @@ import com.example.projectsmarket.repositories.StudentProjectRepository;
 import com.example.projectsmarket.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -39,10 +40,12 @@ public class ProjectsService {
 
     @Transactional
     public void deleteProject(long projectId) {
+        marksRepository.deleteAllByStudentProject_ProjectIdEquals(projectId);
         projectsRepository.deleteById(projectId);
     }
 
     @Transactional
+    @SneakyThrows
     public void setRatingToProject(long projectId, int mark) {
         var project = projectsRepository.findById(projectId).get();
         var teacherEntity = userRepository.findUserEntityByUserEmailEquals(ContextUtil.getAuthorizedUserName());
@@ -53,6 +56,7 @@ public class ProjectsService {
                 .mark(mark)
                 .build();
         marksRepository.save(markEntity);
+//        Thread.sleep(1500);
     }
 
     public List<ProjectDTO> getAllAvailableProjects(){

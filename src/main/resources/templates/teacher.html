@@ -36,5 +36,8 @@
     <p>Your mark: <input type="number" th:field="*{mark}" /></p>
     <p><input type="submit" value="Submit" /> </p>
 </form>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 </body>
 </html>

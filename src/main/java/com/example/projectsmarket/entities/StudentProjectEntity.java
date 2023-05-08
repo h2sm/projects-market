@@ -28,7 +28,7 @@ public class StudentProjectEntity {
     private String projectDescription;
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
-                    CascadeType.ALL
+                    CascadeType.REMOVE
             })
     @JoinTable(name = "project_marks",
             joinColumns = {@JoinColumn(name = "project_id"),
