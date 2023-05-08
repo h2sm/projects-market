@@ -26,10 +26,8 @@ public class StudentProjectEntity {
     private String projectName;
     @Column(name = "project_description")
     private String projectDescription;
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.REMOVE
-            })
+    @OneToMany(fetch = FetchType.EAGER,
+            orphanRemoval = true)
     @JoinTable(name = "project_marks",
             joinColumns = {@JoinColumn(name = "project_id"),
             }, inverseJoinColumns = @JoinColumn( name="mark_id"))

@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,8 +41,8 @@ public class ProjectsService {
 
     @Transactional
     public void deleteProject(long projectId) {
-        marksRepository.deleteAllByStudentProject_ProjectIdEquals(projectId);
-        projectsRepository.deleteById(projectId);
+        projectsRepository.deleteAllByIdInBatch(Set.of(projectId));
+//        projectsRepository.deleteById(projectId);
     }
 
     @Transactional

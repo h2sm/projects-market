@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "project_marks")
@@ -17,10 +19,11 @@ public class ProjectMarksEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mark_id")
     private Long markId;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private StudentProjectEntity studentProject;
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "teacher_id", referencedColumnName = "user_id")
     private UserEntity teacherEntity;
     @Column(name = "project_mark")
