@@ -2,10 +2,12 @@ package com.example.projectsmarket.security;
 
 import com.example.projectsmarket.entities.Position;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -16,18 +18,19 @@ public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
 
     @Bean
+    @SneakyThrows
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/resources/**").permitAll()
                         .requestMatchers("/static/**").permitAll()
-                        .requestMatchers("/projects").hasRole(Position.TEACHER.name())
-                        .requestMatchers("/projects").hasRole(Position.ADMIN.name())
-                        .requestMatchers("/projects/mark").hasRole(Position.TEACHER.name())
-                        .requestMatchers("/projects/delete").hasRole(Position.ADMIN.name())
-                        .requestMatchers("/projects/project").hasRole(Position.STUDENT.name())
+//                        .requestMatchers("/addProject").hasAnyRole(Position.STUDENT.name())
+                        .requestMatchers("/markProject").hasAnyRole(Position.TEACHER.name())
+                        .requestMatchers("/allProjects").hasAnyRole(Position.TEACHER.name())
+                        .requestMatchers("/deleteProject").hasAnyRole(Position.ADMIN.name())
                         .anyRequest().authenticated()
+
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
