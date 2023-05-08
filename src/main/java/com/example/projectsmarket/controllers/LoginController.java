@@ -1,5 +1,6 @@
 package com.example.projectsmarket.controllers;
 
+import com.example.projectsmarket.dtos.MarkProjectDTO;
 import com.example.projectsmarket.dtos.NewProjectDTO;
 import com.example.projectsmarket.services.ProjectsService;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,10 @@ public class LoginController {
         model.addAttribute("position", service.getUserPosition());
         switch (pos) {
             case "STUDENT" -> model.addAttribute("newProjectDTO", new NewProjectDTO());
-            case "TEACHER" -> model.addAttribute("allProjects", service.getAllAvailableProjects());
+            case "TEACHER" ->{
+                model.addAttribute("allProjects", service.getAllAvailableProjects());
+                model.addAttribute("markDTO", new MarkProjectDTO());
+            }
             case "ADMIN" -> model.addAttribute("delete", "deletew");
         }
         return pos.toLowerCase();
@@ -43,9 +47,10 @@ public class LoginController {
 
 
     @PostMapping("/mark")
-    public String markProject(@ModelAttribute("newProjectDTO") NewProjectDTO newProjectDTO, Model model) {
-        service.addProject(newProjectDTO);
+    public String markProject(@ModelAttribute("markDTO") MarkProjectDTO mark, Model model) {
+        service.setRatingToProject(mark.getProjectId(), mark.getMark());
         model.addAttribute("position", service.getUserPosition());
+        model.addAttribute("allProjects", service.getAllAvailableProjects());
         return "teacher";
     }
 

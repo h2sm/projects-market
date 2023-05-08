@@ -9,13 +9,32 @@
 <h2>You are a <span th:text="${position}" /></h2>
 <h2>plz rate works you liked</h2>
 <table th:object="${allProjects}" id="table" border="1">
+    <tr>
+        <td>Project id</td>
+        <td>Project name</td>
+        <td>Project descrription</td>
+        <td>Student name</td>
+        <td>Marks</td>
+
+    </tr>
     <tr th:each="project : ${allProjects}">
-        <td  th:text="${project.getProjectId()}"></td>
+        <td th:text="${project.getProjectId()}"></td>
         <td  th:text="${project.getProjectName()}"></td>
         <td  th:text="${project.getProjectDescription()}"></td>
         <td  th:text="${project.getStudentName()}"></td>
-<!--        <td  th:text="${allProjects.marks}"></td>-->
+        <td>
+            <div th:if="${project.getMarks() != null}">
+                <div  th:each="mark : ${project.getMarks()}">
+                    <div  th:text="${mark}"></div>
+            </div>
+            </div>
+        </td>
     </tr>
 </table>
+<form action="#" th:action="@{/mark}" th:object="${markDTO}" method="post">
+    <p>Project id: <input type="number" th:field="*{projectId}" /></p>
+    <p>Your mark: <input type="number" th:field="*{mark}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
 </body>
 </html>
