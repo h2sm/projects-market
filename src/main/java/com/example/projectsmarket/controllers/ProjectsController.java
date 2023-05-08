@@ -1,9 +1,12 @@
 package com.example.projectsmarket.controllers;
 
 import com.example.projectsmarket.dtos.NewProjectDTO;
+import com.example.projectsmarket.dtos.ProjectDTO;
 import com.example.projectsmarket.services.ProjectsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
@@ -25,6 +28,11 @@ public class ProjectsController {
     @RequestMapping(value = "/mark", method = RequestMethod.POST)
     public void setRatingToProject(@RequestParam long projectId, @RequestParam int mark){
         projectsService.setRatingToProject(projectId, mark);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<ProjectDTO> getAllProjects(){
+        return projectsService.getAllAvailableProjects();
     }
 
 }

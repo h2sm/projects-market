@@ -1,16 +1,22 @@
 package com.example.projectsmarket.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "project_marks")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectMarksEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mark_id")
-    private long markId;
+    private Long markId;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     private StudentProjectEntity studentProject;

@@ -1,4 +1,4 @@
-package com.example.projectsmarket.services;
+package com.example.projectsmarket.security;
 
 import com.example.projectsmarket.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentProjectRepository extends JpaRepository<StudentProjectEntity, Long> {
+    //List<StudentProjectEntity> fi
 }

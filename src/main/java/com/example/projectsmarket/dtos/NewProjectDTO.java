@@ -5,6 +5,6 @@ import java.io.Serializable;
 
 @Data
 public class NewProjectDTO implements Serializable {
-    public String projectName;
-    public String projectDescription;
+    private String projectName;
+    private String projectDescription;
 }
