@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  postgresql:
+    container_name: postgresql
+    image: postgres:12.2-alpine
+    environment:
+      POSTGRES_DB: ProjectMarketDB
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  app:
+    container_name: java-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - "SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/ProjectMarketDB"
+      - "DB_HOST=postgresql"
+      - "POSTGRES_USER=docker"
+      - "POSTGRES_PASSWORD=docker"
+      - "SERVER_PORT=8080"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    restart: always
