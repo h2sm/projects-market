@@ -21,9 +21,12 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/resources/**").permitAll()
-                        .requestMatchers("/**/mark").hasRole(Position.TEACHER.name())
-                        .requestMatchers("/**/delete").hasRole(Position.ADMIN.name())
-                        .requestMatchers("/**/project").hasRole(Position.STUDENT.name())
+                        .requestMatchers("/static/**").permitAll()
+                        .requestMatchers("/projects").hasRole(Position.TEACHER.name())
+                        .requestMatchers("/projects").hasRole(Position.ADMIN.name())
+                        .requestMatchers("/projects/mark").hasRole(Position.TEACHER.name())
+                        .requestMatchers("/projects/delete").hasRole(Position.ADMIN.name())
+                        .requestMatchers("/projects/project").hasRole(Position.STUDENT.name())
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

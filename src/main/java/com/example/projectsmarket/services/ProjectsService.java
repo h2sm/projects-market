@@ -11,6 +11,7 @@ import com.example.projectsmarket.repositories.StudentProjectRepository;
 import com.example.projectsmarket.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,12 @@ public class ProjectsService {
     public List<ProjectDTO> getAllAvailableProjects(){
         var projectsList = projectsRepository.findAll();
         return projectsList.stream().map(swapper::toDTO).collect(Collectors.toList());
+    }
+
+    public String getUserPosition(){
+        var x = SecurityContextHolder.getContext().getAuthentication();
+        var auth = x.getAuthorities();
+        return auth.stream().findFirst().get().toString();
     }
 
 
